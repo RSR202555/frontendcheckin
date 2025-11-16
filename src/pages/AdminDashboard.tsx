@@ -195,8 +195,15 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
         formData.append('evaluation_date', uploadForm.evaluationDate);
         formData.append('notes', uploadForm.notes || '');
 
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('auth_token') : null;
+
         const response = await fetch(`${API_URL}/admin/evaluations/upload`, {
           method: 'POST',
+          headers: token
+            ? {
+                Authorization: `Bearer ${token}`,
+              }
+            : undefined,
           body: formData,
         });
 
