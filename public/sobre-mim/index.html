@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sobre Mim • Lucas Paranhos</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-0ZswH5qC5Zp2nJruGhQ7m1wK9W7pYgXgYlq1rCcehP0rZxqQv48rj7a6k8KpQpSYm4XJ0a7B7T6qVt1nQkQb+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <!-- Seção principal: Sobre Mim -->
+    <section class="about">
+      <header class="about__header">
+        <h1 class="about__title">Conheça o Profissional</h1>
+        <p class="about__subtitle">Transformando vidas com ciência, estratégia e acompanhamento humano.</p>
+      </header>
+
+      <div class="about__content">
+        <!-- Imagem em destaque -->
+        <figure class="about__figure">
+          <!-- Imagem pública servida pelo Vite a partir de /public -->
+          <img src="/sobre-mim/lucas.jpg.jpg" alt="Foto de Lucas Paranhos com uniforme verde e amarelo, braços cruzados" class="about__image" />
+          <figcaption class="sr-only">Lucas Paranhos</figcaption>
+        </figure>
+
+        <!-- Texto e informações -->
+        <article class="about__info">
+          <h2 class="about__name">Lucas Paranhos</h2>
+          <p class="about__cref">CREF: <strong>017819-G/BA</strong></p>
+
+          <div class="about__blocks">
+            <section class="about__block">
+              <h3><i class="fa-solid fa-graduation-cap"></i> Formação</h3>
+              <ul class="about__list">
+                <li>Bacharel em Educação Física</li>
+              </ul>
+            </section>
+
+            <section class="about__block">
+              <h3><i class="fa-solid fa-award"></i> Especializações</h3>
+              <ul class="about__list">
+                <li>Especialista em Avaliação Física e Correção Postural</li>
+                <li>Pós-graduado em Condicionamento Físico, Prevenção e Reabilitação de Lesões</li>
+              </ul>
+            </section>
+          </div>
+
+          <blockquote class="about__slogan">
+            “+10 anos transformando vidas com avaliação assertiva, treinos inteligentes e resultados reais.”
+          </blockquote>
+
+          <div class="about__cta">
+            <a href="#agendar" class="btn btn--primary">
+              <i class="fa-solid fa-calendar-check"></i>
+              Agendar Avaliação
+            </a>
+            <a href="#contato" class="btn btn--black">
+              <i class="fa-solid fa-envelope"></i>
+              Entrar em Contato
+            </a>
+            <a href="/" class="btn btn--black" aria-label="Voltar para Início" title="Voltar para Início">
+              <i class="fa-solid fa-house"></i>
+              Voltar para Início
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <script src="./script.js" defer></script>
+  </body>
+</html>
