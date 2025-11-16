@@ -1,4 +1,8 @@
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+// Em produção, a API deve ser acessada sempre via HTTPS no domínio do backend.
+// Mantemos a variável de ambiente para flexibilidade, mas usamos um fallback
+// seguro em vez de localhost para evitar chamadas HTTP inseguras.
+export const API_URL =
+  import.meta.env.VITE_API_URL || 'https://app-app.qeqzxb.easypanel.host';
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
