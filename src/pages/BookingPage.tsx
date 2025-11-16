@@ -16,7 +16,6 @@ export function BookingPage({ onNavigate }: BookingPageProps) {
     notes: '',
     contactName: '',
     contactPhone: '',
-    contactEmail: '',
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -47,7 +46,6 @@ export function BookingPage({ onNavigate }: BookingPageProps) {
         notes: formData.notes || null,
         contact_name: formData.contactName,
         contact_phone: formData.contactPhone,
-        contact_email: formData.contactEmail,
       });
 
       setLoading(false);
@@ -136,20 +134,6 @@ export function BookingPage({ onNavigate }: BookingPageProps) {
                   placeholder="(75) 99999-9999"
                 />
               </div>
-            </div>
-
-            <div>
-              <label className="block text-yellow-400 font-semibold mb-2">
-                E-mail *
-              </label>
-              <input
-                type="email"
-                required
-                value={formData.contactEmail}
-                onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg bg-white text-black focus:border-yellow-400 focus:outline-none transition"
-                placeholder="seu@email.com"
-              />
             </div>
 
             <div>
