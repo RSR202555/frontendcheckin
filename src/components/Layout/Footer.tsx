@@ -17,15 +17,17 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <MapPin size={20} className="mt-1 flex-shrink-0" />
-                <span className="text-yellow-400/80">Rua Exemplo, 123 - Centro, Cidade - UF</span>
+                <span className="text-yellow-400/80">
+                  Praça Pedro da Costa Doréa, nº76, Alagoinhas Velha, CEP:48007326
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone size={20} className="flex-shrink-0" />
-                <span className="text-yellow-400/80">(11) 9999-9999</span>
+                <span className="text-yellow-400/80">(75) 9919-6485</span>
               </div>
               <div className="flex items-center gap-3">
                 <Mail size={20} className="flex-shrink-0" />
-                <span className="text-yellow-400/80">contato@clinicafitness.com</span>
+                <span className="text-yellow-400/80">clinicacheckin@gmail.com</span>
               </div>
             </div>
           </div>
@@ -36,8 +38,8 @@ export function Footer() {
               <div className="flex items-start gap-3">
                 <Clock size={20} className="mt-1 flex-shrink-0" />
                 <div className="text-yellow-400/80">
-                  <p>Segunda a Sexta: 8h às 20h</p>
-                  <p>Sábado: 8h às 13h</p>
+                  <p>Segunda a Sexta:</p>
+                  <p>07:00 às 11:00 e 14:00 às 18:00</p>
                 </div>
               </div>
             </div>
