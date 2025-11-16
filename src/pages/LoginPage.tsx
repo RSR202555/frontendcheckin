@@ -45,6 +45,8 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
           onNavigate('client-dashboard');
         }
       }
+    }
+
     setLoading(false);
   };
 
