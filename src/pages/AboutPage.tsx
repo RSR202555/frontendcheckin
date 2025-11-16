@@ -1,4 +1,8 @@
-export function AboutPage() {
+interface AboutPageProps {
+  onNavigate: (page: string) => void;
+}
+
+export function AboutPage({ onNavigate }: AboutPageProps) {
   return (
     <section className="py-12 bg-[#f2c94c]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,15 +51,27 @@ export function AboutPage() {
             </blockquote>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href="#agendar" className="btn-primary bg-yellow-400 text-black px-5 py-2 rounded-full font-semibold hover:bg-yellow-500 transition">
+              <button
+                type="button"
+                onClick={() => onNavigate('booking')}
+                className="btn-primary bg-yellow-400 text-black px-5 py-2 rounded-full font-semibold hover:bg-yellow-500 transition"
+              >
                 Agendar Avaliação
-              </a>
-              <a href="#contato" className="btn-primary bg-yellow-400 text-black px-5 py-2 rounded-full font-semibold hover:bg-yellow-500 transition">
+              </button>
+              <button
+                type="button"
+                onClick={() => onNavigate('contact')}
+                className="btn-primary bg-yellow-400 text-black px-5 py-2 rounded-full font-semibold hover:bg-yellow-500 transition"
+              >
                 Entrar em Contato
-              </a>
-              <a href="/" className="btn-primary bg-yellow-400 text-black px-5 py-2 rounded-full font-semibold hover:bg-yellow-500 transition">
+              </button>
+              <button
+                type="button"
+                onClick={() => onNavigate('home')}
+                className="btn-primary bg-yellow-400 text-black px-5 py-2 rounded-full font-semibold hover:bg-yellow-500 transition"
+              >
                 Voltar para Início
-              </a>
+              </button>
             </div>
           </article>
         </div>

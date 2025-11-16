@@ -51,7 +51,7 @@ function App() {
       case 'contact':
         return <ContactPage />;
       case 'about':
-        return <AboutPage />;
+        return <AboutPage onNavigate={navigate} />;
       case 'booking':
         return <BookingPage onNavigate={navigate} />;
       case 'login':
