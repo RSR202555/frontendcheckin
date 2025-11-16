@@ -48,6 +48,44 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   const [latestEvaluationId, setLatestEvaluationId] = useState<string | null>(null);
   const [showNewEvaluationAlert, setShowNewEvaluationAlert] = useState(false);
 
+  const mapAppointments = (appointmentsData: any[]): AppointmentWithDetails[] => {
+    return appointmentsData.map((item) => ({
+      id: item.id,
+      appointment_date: item.appointment_date,
+      appointment_time: item.appointment_time,
+      status: item.status,
+      notes: item.notes,
+      profiles: {
+        full_name: item.client_full_name,
+        email: item.client_email,
+        phone: item.client_phone,
+      },
+      services: {
+        name: item.service_name,
+      },
+    }));
+  };
+
+  const playNotificationSound = () => {
+    try {
+      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      const audioCtx = new AudioCtx();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.type = 'sine';
+      oscillator.frequency.value = 880;
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      oscillator.start();
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
+      oscillator.stop(audioCtx.currentTime + 0.4);
+    } catch (error) {
+      console.error('Erro ao reproduzir som de notificação', error);
+    }
+  };
+
   useEffect(() => {
     loadData();
     initLatestEvaluationWatcher();
@@ -60,21 +98,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
         api.get<ClientProfile[]>('/admin/clients'),
       ]);
 
-      const mappedAppointments: AppointmentWithDetails[] = appointmentsData.map((item) => ({
-        id: item.id,
-        appointment_date: item.appointment_date,
-        appointment_time: item.appointment_time,
-        status: item.status,
-        notes: item.notes,
-        profiles: {
-          full_name: item.client_full_name,
-          email: item.client_email,
-          phone: item.client_phone,
-        },
-        services: {
-          name: item.service_name,
-        },
-      }));
+      const mappedAppointments = mapAppointments(appointmentsData);
 
       setAppointments(mappedAppointments);
       setClients(clientsData);
@@ -111,6 +135,28 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
       console.error('Erro ao inicializar verificação de avaliações', error);
     }
   };
+
+  useEffect(() => {
+    const intervalId = window.setInterval(async () => {
+      try {
+        const appointmentsData = await api.get<any[]>('/admin/appointments');
+        const mappedAppointments = mapAppointments(appointmentsData);
+
+        const hasNewAppointment = mappedAppointments.some(
+          (a) => !appointments.some((existing) => existing.id === a.id)
+        );
+
+        if (hasNewAppointment) {
+          setAppointments(mappedAppointments);
+          playNotificationSound();
+        }
+      } catch (error) {
+        console.error('Erro ao verificar novos agendamentos', error);
+      }
+    }, 10000);
+
+    return () => window.clearInterval(intervalId);
+  }, [appointments]);
 
   const updateAppointmentStatus = async (appointmentId: string, newStatus: string) => {
     try {
