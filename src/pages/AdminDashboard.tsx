@@ -33,7 +33,7 @@ interface AdminDashboardProps {
 
 export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   const { profile } = useAuth();
-  const [activeTab, setActiveTab] = useState<'appointments' | 'clients' | 'upload'>('appointments');
+  const [activeTab, setActiveTab] = useState<'appointments' | 'clients' | 'upload' | 'create-client'>('appointments');
   const [appointments, setAppointments] = useState<AppointmentWithDetails[]>([]);
   const [clients, setClients] = useState<ClientProfile[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,6 +47,15 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [latestEvaluationId, setLatestEvaluationId] = useState<string | null>(null);
   const [showNewEvaluationAlert, setShowNewEvaluationAlert] = useState(false);
+  const [createClientForm, setCreateClientForm] = useState({
+    full_name: '',
+    email: '',
+    phone: '',
+    password: '',
+  });
+  const [createClientLoading, setCreateClientLoading] = useState(false);
+  const [createClientMessage, setCreateClientMessage] = useState<string | null>(null);
+  const [createClientError, setCreateClientError] = useState<string | null>(null);
 
   const mapAppointments = (appointmentsData: any[]): AppointmentWithDetails[] => {
     return appointmentsData.map((item) => ({
@@ -240,6 +249,32 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
     return texts[status as keyof typeof texts] || status;
   };
 
+  const handleCreateClient = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCreateClientLoading(true);
+    setCreateClientMessage(null);
+    setCreateClientError(null);
+
+    try {
+      await api.post('/auth/signup', {
+        email: createClientForm.email,
+        password: createClientForm.password,
+        full_name: createClientForm.full_name,
+        phone: createClientForm.phone,
+      });
+
+      setCreateClientMessage('Cliente cadastrado com sucesso. Envie os dados de acesso para o paciente.');
+      setCreateClientForm({ full_name: '', email: '', phone: '', password: '' });
+      await loadData();
+    } catch (error: any) {
+      console.error('Erro ao cadastrar cliente', error);
+      const message = error?.message || 'Erro ao cadastrar cliente. Verifique se o e-mail já não está cadastrado.';
+      setCreateClientError(message);
+    } finally {
+      setCreateClientLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#f2c94c] flex items-center justify-center">
@@ -308,6 +343,17 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           >
             <FileText className="inline mr-2" size={20} />
             Registrar Avaliação
+          </button>
+          <button
+            onClick={() => setActiveTab('create-client')}
+            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
+              activeTab === 'create-client'
+                ? 'bg-black text-yellow-400 border-yellow-400'
+                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
+            }`}
+          >
+            <Users className="inline mr-2" size={20} />
+            Cadastrar Cliente
           </button>
         </div>
 
@@ -417,6 +463,98 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'create-client' && (
+          <div>
+            <div className="mb-6 flex justify-start">
+              <div className="inline-block bg-black border-2 border-yellow-400 rounded-xl px-6 py-3 shadow-lg">
+                <h2 className="text-2xl font-bold text-yellow-400">
+                  Cadastrar Novo Cliente
+                </h2>
+              </div>
+            </div>
+
+            <div className="bg-black text-yellow-100 p-8 rounded-xl shadow-lg border-2 border-yellow-400 max-w-xl">
+              {createClientError && (
+                <div className="mb-4 p-4 bg-red-100 text-red-800 rounded-lg border border-red-400">
+                  {createClientError}
+                </div>
+              )}
+              {createClientMessage && !createClientError && (
+                <div className="mb-4 p-4 bg-green-100 text-green-800 rounded-lg border border-green-400">
+                  {createClientMessage}
+                </div>
+              )}
+
+              <form onSubmit={handleCreateClient} className="space-y-5">
+                <div>
+                  <label className="block text-yellow-400 font-semibold mb-2">
+                    Nome completo do cliente *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={createClientForm.full_name}
+                    onChange={(e) => setCreateClientForm({ ...createClientForm, full_name: e.target.value })}
+                    className="w-full px-4 py-3 border-2 border-yellow-500/60 rounded-lg bg-black text-yellow-100 focus:border-yellow-400 focus:outline-none transition"
+                    placeholder="Nome completo"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-yellow-400 font-semibold mb-2">
+                    E-mail do cliente *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={createClientForm.email}
+                    onChange={(e) => setCreateClientForm({ ...createClientForm, email: e.target.value })}
+                    className="w-full px-4 py-3 border-2 border-yellow-500/60 rounded-lg bg-black text-yellow-100 focus:border-yellow-400 focus:outline-none transition"
+                    placeholder="email@cliente.com"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-yellow-400 font-semibold mb-2">
+                    Telefone *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={createClientForm.phone}
+                    onChange={(e) => setCreateClientForm({ ...createClientForm, phone: e.target.value })}
+                    className="w-full px-4 py-3 border-2 border-yellow-500/60 rounded-lg bg-black text-yellow-100 focus:border-yellow-400 focus:outline-none transition"
+                    placeholder="(75) 99999-9999"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-yellow-400 font-semibold mb-2">
+                    Senha inicial *
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    minLength={6}
+                    value={createClientForm.password}
+                    onChange={(e) => setCreateClientForm({ ...createClientForm, password: e.target.value })}
+                    className="w-full px-4 py-3 border-2 border-yellow-500/60 rounded-lg bg-black text-yellow-100 focus:border-yellow-400 focus:outline-none transition"
+                    placeholder="Mínimo 6 caracteres"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={createClientLoading}
+                  className="w-full bg-yellow-400 text-black py-4 rounded-lg font-semibold hover:bg-yellow-500 transition disabled:opacity-50"
+                >
+                  {createClientLoading ? 'Cadastrando...' : 'Cadastrar cliente'}
+                </button>
+              </form>
             </div>
           </div>
         )}

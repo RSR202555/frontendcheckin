@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LogIn, UserPlus } from 'lucide-react';
+import { LogIn } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 interface LoginPageProps {
@@ -7,8 +7,7 @@ interface LoginPageProps {
 }
 
 export function LoginPage({ onNavigate }: LoginPageProps) {
-  const { signIn, signUp, forgotPassword } = useAuth();
-  const [isLogin, setIsLogin] = useState(true);
+  const { signIn, forgotPassword } = useAuth();
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -34,7 +33,7 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
       } else {
         setInfo('Se este e-mail estiver cadastrado, enviaremos um link para redefinir sua senha.');
       }
-    } else if (isLogin) {
+    } else {
       const { error, profile } = await signIn(formData.email, formData.password);
       if (error) {
         console.error('Erro no login:', error);
@@ -46,25 +45,6 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
           onNavigate('client-dashboard');
         }
       }
-    } else {
-      const { error, profile } = await signUp(
-        formData.email,
-        formData.password,
-        formData.fullName,
-        formData.phone
-      );
-      if (error) {
-        console.error('Erro ao criar conta:', error);
-        setError(error.message || 'Erro ao criar conta. Email já cadastrado?');
-      } else {
-        if (profile && profile.role === 'admin') {
-          onNavigate('admin-dashboard');
-        } else {
-          onNavigate('client-dashboard');
-        }
-      }
-    }
-
     setLoading(false);
   };
 
@@ -73,11 +53,9 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
       <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="text-center mb-8">
           <div className="inline-block bg-black border-2 border-yellow-400 rounded-xl px-6 py-4 shadow-lg">
-            <h1 className="text-3xl sm:text-4xl font-bold text-yellow-400 mb-1">
-              {isLogin ? 'Fazer Login' : 'Criar Conta'}
-            </h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-yellow-400 mb-1">Fazer Login</h1>
             <p className="text-yellow-300 text-sm sm:text-base">
-              {isLogin ? 'Acesse sua área de cliente' : 'Cadastre-se para agendar avaliações'}
+              Acesse sua área de cliente ou administrativa
             </p>
           </div>
         </div>
@@ -95,38 +73,6 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {!isLogin && !isForgotPassword && (
-              <>
-                <div>
-                  <label className="block text-yellow-400 font-semibold mb-2">
-                    Nome Completo *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-yellow-400 focus:outline-none transition"
-                    placeholder="Seu nome completo"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-yellow-400 font-semibold mb-2">
-                    Telefone *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-yellow-400 focus:outline-none transition"
-                    placeholder="(11) 99999-9999"
-                  />
-                </div>
-              </>
-            )}
-
             <div>
               <label className="block text-yellow-400 font-semibold mb-2">E-mail *</label>
               <input
@@ -159,28 +105,16 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
               disabled={loading}
               className="w-full bg-yellow-400 text-black py-4 rounded-lg font-semibold hover:bg-yellow-500 transition disabled:opacity-50 flex items-center justify-center gap-2"
             >
-              {isForgotPassword ? null : (isLogin ? <LogIn size={20} /> : <UserPlus size={20} />)}
+              {isForgotPassword ? null : <LogIn size={20} />}
               {loading
                 ? 'Processando...'
                 : isForgotPassword
                   ? 'Enviar link de redefinição'
-                  : (isLogin ? 'Entrar' : 'Criar Conta')}
+                  : 'Entrar'}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            {!isForgotPassword && (
-              <button
-                onClick={() => {
-                  setIsLogin(!isLogin);
-                  setError('');
-                  setInfo('');
-                }}
-                className="text-yellow-400 hover:text-yellow-500 font-semibold block w-full mb-2"
-              >
-                {isLogin ? 'Não tem conta? Cadastre-se' : 'Já tem conta? Faça login'}
-              </button>
-            )}
             <button
               onClick={() => {
                 setIsForgotPassword(!isForgotPassword);
