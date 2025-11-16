@@ -14,10 +14,20 @@ import { ResetPasswordPage } from './pages/ResetPasswordPage';
 type Page = 'home' | 'services' | 'contact' | 'booking' | 'login' | 'client-dashboard' | 'admin-dashboard' | 'about' | 'reset-password';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [currentPage, setCurrentPage] = useState<Page>(() => {
+    if (typeof window === 'undefined') return 'home';
+    const stored = window.localStorage.getItem('currentPage') as Page | null;
+    return stored ?? 'home';
+  });
   const [resetToken, setResetToken] = useState<string | null>(null);
 
-  const navigate = (page: string) => setCurrentPage(page as Page);
+  const navigate = (page: string) => {
+    const target = page as Page;
+    setCurrentPage(target);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('currentPage', target);
+    }
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -28,7 +38,7 @@ function App() {
     if (path.includes('reset-password')) {
       const token = url.searchParams.get('token');
       setResetToken(token);
-      setCurrentPage('reset-password');
+      navigate('reset-password');
     }
   }, []);
 
