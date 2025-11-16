@@ -110,9 +110,8 @@ export function ContactPage() {
                 <Clock size={24} className="text-yellow-600 flex-shrink-0 mt-1" />
                 <div>
                   <h3 className="font-semibold text-yellow-400 mb-1">Horário de Atendimento</h3>
-                  <p className="text-yellow-50/90">Segunda a Sexta: 8h às 20h</p>
-                  <p className="text-yellow-50/90">Sábado: 8h às 13h</p>
-                  <p className="text-yellow-50/90">Domingo: Fechado</p>
+                  <p className="text-yellow-50/90">Segunda a Sexta:</p>
+                  <p className="text-yellow-50/90">07:00 às 11:00 e 14:00 às 18:00</p>
                 </div>
               </div>
             </div>
