@@ -18,7 +18,7 @@ export function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin size={20} className="mt-1 flex-shrink-0" />
                 <span className="text-yellow-400/80">
-                  Praça Pedro da Costa Doréa, nº76 proximo a ruína inacabada, Alagoinhas Velha, CEP:48007326
+                  Praça Pedro da Costa Doréa, Nº76 Proximo a Ruína Inacabada, Alagoinhas Velha, CEP:48007326
                 </span>
               </div>
               <div className="flex items-center gap-3">
