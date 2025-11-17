@@ -60,7 +60,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               </div>
               <h3 className="text-xl font-bold mb-3 text-yellow-400">Profissionais Qualificados</h3>
               <p className="text-yellow-50/90 leading-relaxed">
-                Equipe experiente e certificada em educação física e nutrição
+                Equipe Especializada e Preparada Para te Oferecer Um Atendimento de Excelência.
               </p>
             </div>
 

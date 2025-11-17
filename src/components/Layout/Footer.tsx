@@ -6,9 +6,9 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">Clínica Fitness</h3>
+            <h3 className="text-xl font-bold mb-4">Clínica Checkin</h3>
             <p className="text-yellow-400/80 leading-relaxed">
-              Centro especializado em avaliações físicas e acompanhamento profissional para seus objetivos de saúde e bem-estar.
+              Centro Especializado em Avaliações Físicas e Prescrição de Treinos Personalizados.
             </p>
           </div>
 
@@ -47,7 +47,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-yellow-400/20 mt-8 pt-8 text-center text-yellow-400/60">
-          <p>&copy; 2024 Clínica Fitness. Todos os direitos reservados.</p>
+          <p>&copy; 2024 Clínica Checkin. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
