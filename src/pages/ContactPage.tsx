@@ -52,7 +52,7 @@ export function ContactPage() {
                   <MapPin size={24} className="text-yellow-600 flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-semibold text-yellow-400 mb-1">Endereço</h3>
-                    <p className="text-yellow-50/90">Praça Pedro da Costa Doréa, nº76 proximo a ruína inacabada</p>
+                    <p className="text-yellow-50/90">Praça Pedro da Costa Doréa, Nº76 Proximo a Ruína Inacabada</p>
                     <p className="text-yellow-50/90">Alagoinhas Velha, CEP:48007326</p>
                   </div>
                 </div>
