@@ -39,7 +39,8 @@ export function Footer() {
                 <Clock size={20} className="mt-1 flex-shrink-0" />
                 <div className="text-yellow-400/80">
                   <p>Segunda a Sexta:</p>
-                  <p>07:00 às 11:00 e 14:00 às 18:00</p>
+                  <p>07:00 às 11:00 e 14:00 às 19:00</p>
+                  <p>Sábado: 07:00 às 13:00</p>
                 </div>
               </div>
             </div>
