@@ -70,7 +70,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               </div>
               <h3 className="text-xl font-bold mb-3 text-yellow-400">Resultados Comprovados</h3>
               <p className="text-yellow-50/90 leading-relaxed">
-                Cada Avaliação gera dados reais que mostram sua evolução e orietam seu treino com precisão.
+                Cada Avaliação gera dados reais que mostram sua evolução e orientam seu treino com precisão.
               </p>
             </div>
 
