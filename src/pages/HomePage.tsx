@@ -58,7 +58,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mb-4">
                 <Users size={32} className="text-black" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-yellow-400">Profissionais Qualificados</h3>
+              <h3 className="text-xl font-bold mb-3 text-yellow-400">Equipe Especializada</h3>
               <p className="text-yellow-50/90 leading-relaxed">
                 Equipe Especializada e Preparada Para te Oferecer Um Atendimento de Excelência.
               </p>
