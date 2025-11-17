@@ -17,11 +17,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 className="w-60 md:w-[380px] h-auto transition-transform duration-300 hover:scale-105"
               />
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-4">
-              Transforme Sua Saúde
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-yellow-400">
+              Avaliar é o Primeiro Passo Para Resultados Seguros e Eficientes
             </h1>
             <p className="text-xl md:text-2xl text-yellow-400/90 mb-2 max-w-3xl mx-auto leading-relaxed">
-              Avaliações físicas completas e personalizadas com profissionais especializados
+              Avaliações Físicas Completas e Treinos Personalizados Com Profissionais Especializados
             </p>
             <button
               onClick={() => onNavigate('booking')}
