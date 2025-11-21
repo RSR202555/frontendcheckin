@@ -56,6 +56,12 @@ export function BookingPage({ onNavigate }: BookingPageProps) {
     } catch (error) {
       console.error('Erro ao criar agendamento', error);
       setLoading(false);
+
+      if (error instanceof Error && error.message.includes('409')) {
+        alert('Este horário já está ocupado. Por favor, escolha outro horário.');
+      } else {
+        alert('Não foi possível criar o agendamento. Tente novamente.');
+      }
     }
   };
 
