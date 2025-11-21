@@ -66,6 +66,30 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   const [createClientMessage, setCreateClientMessage] = useState<string | null>(null);
   const [createClientError, setCreateClientError] = useState<string | null>(null);
 
+  const loadEvaluationsHistory = async (clientId: string) => {
+    if (!clientId) {
+      setEvaluationsHistory([]);
+      return;
+    }
+
+    try {
+      const data = await api.get<
+        {
+          id: string;
+          evaluation_date: string;
+          pdf_url: string | null;
+          notes: string | null;
+          professional_full_name: string;
+        }[]
+      >(`/admin/clients/${clientId}/evaluations`);
+
+      setEvaluationsHistory(data);
+    } catch (error) {
+      console.error('Erro ao carregar histórico de avaliações do cliente', error);
+      setEvaluationsHistory([]);
+    }
+  };
+
   const formatDateFromISO = (dateStr: string) => {
     if (!dateStr) return '';
     const safe = dateStr.slice(0, 10); // garante formato YYYY-MM-DD mesmo se vier com T00:00:00Z
