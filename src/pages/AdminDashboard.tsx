@@ -355,6 +355,75 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           </div>
         )}
 
+        <div className="mb-8">
+          <div className="w-full flex justify-start mb-3">
+            <div className="inline-block bg-black border-2 border-yellow-400 rounded-xl px-6 py-3 shadow-lg">
+              <h1 className="text-4xl font-bold text-yellow-400 m-0">
+                Painel Administrativo
+              </h1>
+            </div>
+          </div>
+          <p className="text-gray-600">Bem-vindo, {profile?.full_name}</p>
+        </div>
+
+        <div className="flex gap-4 mb-6 overflow-x-auto">
+          <button
+            onClick={() => setActiveTab('appointments')}
+            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
+              activeTab === 'appointments'
+                ? 'bg-black text-yellow-400 border-yellow-400'
+                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
+            }`}
+          >
+            <Calendar className="inline mr-2" size={20} />
+            Agendamentos
+          </button>
+          <button
+            onClick={() => setActiveTab('clients')}
+            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
+              activeTab === 'clients'
+                ? 'bg-black text-yellow-400 border-yellow-400'
+                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
+            }`}
+          >
+            <Users className="inline mr-2" size={20} />
+            Clientes
+          </button>
+          <button
+            onClick={() => setActiveTab('upload')}
+            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
+              activeTab === 'upload'
+                ? 'bg-black text-yellow-400 border-yellow-400'
+                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
+            }`}
+          >
+            <FileText className="inline mr-2" size={20} />
+            Registrar Avaliação
+          </button>
+          <button
+            onClick={() => setActiveTab('create-client')}
+            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
+              activeTab === 'create-client'
+                ? 'bg-black text-yellow-400 border-yellow-400'
+                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
+            }`}
+          >
+            <Users className="inline mr-2" size={20} />
+            Cadastrar Cliente
+          </button>
+          <button
+            onClick={() => setActiveTab('evaluations-history')}
+            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
+              activeTab === 'evaluations-history'
+                ? 'bg-black text-yellow-400 border-yellow-400'
+                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
+            }`}
+          >
+            <FileText className="inline mr-2" size={20} />
+            Histórico de Avaliações
+          </button>
+        </div>
+
         {activeTab === 'evaluations-history' && (
           <div>
             <div className="mb-6 flex justify-start">
@@ -436,74 +505,6 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
             </div>
           </div>
         )}
-        <div className="mb-8">
-          <div className="w-full flex justify-start mb-3">
-            <div className="inline-block bg-black border-2 border-yellow-400 rounded-xl px-6 py-3 shadow-lg">
-              <h1 className="text-4xl font-bold text-yellow-400 m-0">
-                Painel Administrativo
-              </h1>
-            </div>
-          </div>
-          <p className="text-gray-600">Bem-vindo, {profile?.full_name}</p>
-        </div>
-
-        <div className="flex gap-4 mb-6 overflow-x-auto">
-          <button
-            onClick={() => setActiveTab('appointments')}
-            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
-              activeTab === 'appointments'
-                ? 'bg-black text-yellow-400 border-yellow-400'
-                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
-            }`}
-          >
-            <Calendar className="inline mr-2" size={20} />
-            Agendamentos
-          </button>
-          <button
-            onClick={() => setActiveTab('clients')}
-            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
-              activeTab === 'clients'
-                ? 'bg-black text-yellow-400 border-yellow-400'
-                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
-            }`}
-          >
-            <Users className="inline mr-2" size={20} />
-            Clientes
-          </button>
-          <button
-            onClick={() => setActiveTab('upload')}
-            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
-              activeTab === 'upload'
-                ? 'bg-black text-yellow-400 border-yellow-400'
-                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
-            }`}
-          >
-            <FileText className="inline mr-2" size={20} />
-            Registrar Avaliação
-          </button>
-          <button
-            onClick={() => setActiveTab('create-client')}
-            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
-              activeTab === 'create-client'
-                ? 'bg-black text-yellow-400 border-yellow-400'
-                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
-            }`}
-          >
-            <Users className="inline mr-2" size={20} />
-            Cadastrar Cliente
-          </button>
-          <button
-            onClick={() => setActiveTab('evaluations-history')}
-            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
-              activeTab === 'evaluations-history'
-                ? 'bg-black text-yellow-400 border-yellow-400'
-                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
-            }`}
-          >
-            <FileText className="inline mr-2" size={20} />
-            Histórico de Avaliações
-          </button>
-        </div>
 
         {activeTab === 'appointments' && (
           <div>
