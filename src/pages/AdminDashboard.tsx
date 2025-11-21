@@ -67,10 +67,18 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   const [createClientError, setCreateClientError] = useState<string | null>(null);
 
   const formatDateFromISO = (dateStr: string) => {
-    const [year, month, day] = dateStr.split('-').map(Number);
+    if (!dateStr) return '';
+    const safe = dateStr.slice(0, 10); // garante formato YYYY-MM-DD mesmo se vier com T00:00:00Z
+    const [year, month, day] = safe.split('-').map(Number);
     if (!year || !month || !day) return dateStr;
     const d = new Date(year, month - 1, day);
     return d.toLocaleDateString('pt-BR');
+  };
+
+  const formatTime = (timeStr: string) => {
+    if (!timeStr) return '';
+    // espera algo como HH:MM ou HH:MM:SS e devolve HH:MM
+    return timeStr.slice(0, 5);
   };
 
   const mapAppointments = (appointmentsData: any[]): AppointmentWithDetails[] => {
@@ -505,7 +513,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                           <p>Telefone: {appointment.profiles.phone}</p>
                           <p>
                             <Calendar className="inline mr-2" size={16} />
-                            {formatDateFromISO(appointment.appointment_date)} às {appointment.appointment_time}
+                            {formatDateFromISO(appointment.appointment_date)} às {formatTime(appointment.appointment_time)}
                           </p>
                           {appointment.notes && (
                             <p className="text-sm mt-2 italic">Obs: {appointment.notes}</p>

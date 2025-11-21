@@ -141,10 +141,17 @@ export function ClientDashboard({ onNavigate }: ClientDashboardProps) {
   const [activeTab, setActiveTab] = useState<'appointments' | 'evaluations' | 'profile'>('appointments');
 
   const formatDateFromISO = (dateStr: string) => {
-    const [year, month, day] = dateStr.split('-').map(Number);
+    if (!dateStr) return '';
+    const safe = dateStr.slice(0, 10);
+    const [year, month, day] = safe.split('-').map(Number);
     if (!year || !month || !day) return dateStr;
     const d = new Date(year, month - 1, day);
     return d.toLocaleDateString('pt-BR');
+  };
+
+  const formatTime = (timeStr: string) => {
+    if (!timeStr) return '';
+    return timeStr.slice(0, 5);
   };
 
   useEffect(() => {
@@ -311,7 +318,7 @@ export function ClientDashboard({ onNavigate }: ClientDashboardProps) {
                         <div className="space-y-1 text-yellow-100">
                           <p>
                             <Calendar className="inline mr-2" size={16} />
-                            {formatDateFromISO(appointment.appointment_date)} às {appointment.appointment_time}
+                            {formatDateFromISO(appointment.appointment_date)} às {formatTime(appointment.appointment_time)}
                           </p>
                           <p className="text-sm">Duração: {appointment.services.duration_minutes} minutos</p>
                           {appointment.notes && (
