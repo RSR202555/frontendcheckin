@@ -33,11 +33,20 @@ interface AdminDashboardProps {
 
 export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   const { profile } = useAuth();
-  const [activeTab, setActiveTab] = useState<'appointments' | 'clients' | 'upload' | 'create-client'>('appointments');
+  const [activeTab, setActiveTab] = useState<'appointments' | 'clients' | 'upload' | 'create-client' | 'evaluations-history'>('appointments');
   const [appointments, setAppointments] = useState<AppointmentWithDetails[]>([]);
   const [clients, setClients] = useState<ClientProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedClient, setSelectedClient] = useState('');
+  const [evaluationsHistory, setEvaluationsHistory] = useState<
+    {
+      id: string;
+      evaluation_date: string;
+      pdf_url: string | null;
+      notes: string | null;
+      professional_full_name: string;
+    }[]
+  >([]);
   const [uploadForm, setUploadForm] = useState({
     evaluationDate: new Date().toISOString().split('T')[0],
     notes: '',
@@ -306,6 +315,85 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
             </button>
           </div>
         )}
+
+        {activeTab === 'evaluations-history' && (
+          <div>
+            <div className="mb-6 flex justify-start">
+              <div className="inline-block bg-black border-2 border-yellow-400 rounded-xl px-6 py-3 shadow-lg">
+                <h2 className="text-2xl font-bold text-yellow-400">
+                  Histórico de Avaliações
+                </h2>
+              </div>
+            </div>
+
+            <div className="bg-black text-yellow-100 p-8 rounded-xl shadow-lg border-2 border-yellow-400 max-w-3xl">
+              <div className="mb-6">
+                <label className="block text-yellow-400 font-semibold mb-2">
+                  Selecionar Cliente
+                </label>
+                <select
+                  value={selectedClient}
+                  onChange={(e) => {
+                    const clientId = e.target.value;
+                    setSelectedClient(clientId);
+                    loadEvaluationsHistory(clientId);
+                  }}
+                  className="w-full px-4 py-3 border-2 border-yellow-500/60 rounded-lg bg-black text-yellow-100 focus:border-yellow-400 focus:outline-none transition"
+                >
+                  <option value="">Escolha um cliente</option>
+                  {clients.map((client) => (
+                    <option key={client.id} value={client.id}>
+                      {client.full_name} - {client.email}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {selectedClient && evaluationsHistory.length === 0 && (
+                <p className="text-sm text-yellow-200">
+                  Nenhuma avaliação encontrada para este cliente.
+                </p>
+              )}
+
+              {evaluationsHistory.length > 0 && (
+                <div className="space-y-4">
+                  {evaluationsHistory.map((evaluation) => (
+                    <div
+                      key={evaluation.id}
+                      className="border border-yellow-400 rounded-lg p-4 bg-black/80"
+                    >
+                      <div className="flex flex-wrap justify-between gap-2 mb-2">
+                        <div>
+                          <p className="text-sm text-yellow-300 font-semibold">
+                            {new Date(evaluation.evaluation_date).toLocaleDateString('pt-BR')}
+                          </p>
+                          <p className="text-sm text-yellow-200">
+                            Profissional: {evaluation.professional_full_name}
+                          </p>
+                        </div>
+                      </div>
+                      {evaluation.notes && (
+                        <p className="text-sm mt-2 text-yellow-100">
+                          Observações: {evaluation.notes}
+                        </p>
+                      )}
+                      {evaluation.pdf_url && (
+                        <a
+                          href={evaluation.pdf_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-block mt-3 text-sm text-yellow-300 hover:text-yellow-200 underline"
+                        >
+                          Ver PDF da avaliação
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
         <div className="mb-8">
           <div className="w-full flex justify-start mb-3">
             <div className="inline-block bg-black border-2 border-yellow-400 rounded-xl px-6 py-3 shadow-lg">
@@ -339,6 +427,17 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           >
             <Users className="inline mr-2" size={20} />
             Clientes
+          </button>
+          <button
+            onClick={() => setActiveTab('evaluations-history')}
+            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
+              activeTab === 'evaluations-history'
+                ? 'bg-black text-yellow-400 border-yellow-400'
+                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
+            }`}
+          >
+            <FileText className="inline mr-2" size={20} />
+            Histórico de Avaliações
           </button>
           <button
             onClick={() => setActiveTab('upload')}
