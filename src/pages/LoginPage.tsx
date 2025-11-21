@@ -127,17 +127,6 @@ export function LoginPage({ onNavigate }: LoginPageProps) {
             >
               {isForgotPassword ? 'Voltar para login' : 'Esqueceu a senha?'}
             </button>
-            {!isForgotPassword && (
-              <div className="mt-3">
-                <button
-                  type="button"
-                  onClick={() => onNavigate('bootstrap-admin')}
-                  className="text-yellow-300/70 hover:text-yellow-500 text-xs underline"
-                >
-                  Criar admin inicial
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>
