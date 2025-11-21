@@ -19,10 +19,29 @@ export function BookingPage({ onNavigate }: BookingPageProps) {
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [unavailableTimes, setUnavailableTimes] = useState<string[]>([]);
 
   useEffect(() => {
     loadServices();
   }, []);
+
+  useEffect(() => {
+    const loadUnavailableTimes = async () => {
+      if (!formData.date) {
+        setUnavailableTimes([]);
+        return;
+      }
+
+      try {
+        const times = await api.get<string[]>(`/appointments/unavailable?date=${formData.date}`);
+        setUnavailableTimes(times);
+      } catch (error) {
+        console.error('Erro ao buscar horários indisponíveis', error);
+      }
+    };
+
+    loadUnavailableTimes();
+  }, [formData.date]);
 
   const loadServices = async () => {
     try {
@@ -188,7 +207,9 @@ export function BookingPage({ onNavigate }: BookingPageProps) {
                 className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg bg-white text-black focus:border-yellow-400 focus:outline-none transition"
               >
                 <option value="">Selecione um horário</option>
-                {timeSlots.map((time) => (
+                {timeSlots
+                  .filter((time) => !unavailableTimes.includes(time))
+                  .map((time) => (
                   <option key={time} value={time}>
                     {time}
                   </option>

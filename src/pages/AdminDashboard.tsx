@@ -66,6 +66,13 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   const [createClientMessage, setCreateClientMessage] = useState<string | null>(null);
   const [createClientError, setCreateClientError] = useState<string | null>(null);
 
+  const formatDateFromISO = (dateStr: string) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    if (!year || !month || !day) return dateStr;
+    const d = new Date(year, month - 1, day);
+    return d.toLocaleDateString('pt-BR');
+  };
+
   const mapAppointments = (appointmentsData: any[]): AppointmentWithDetails[] => {
     return appointmentsData.map((item) => ({
       id: item.id,
@@ -365,7 +372,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                       <div className="flex flex-wrap justify-between gap-2 mb-2">
                         <div>
                           <p className="text-sm text-yellow-300 font-semibold">
-                            {new Date(evaluation.evaluation_date).toLocaleDateString('pt-BR')}
+                            {formatDateFromISO(evaluation.evaluation_date)}
                           </p>
                           <p className="text-sm text-yellow-200">
                             Profissional: {evaluation.professional_full_name}
@@ -498,7 +505,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                           <p>Telefone: {appointment.profiles.phone}</p>
                           <p>
                             <Calendar className="inline mr-2" size={16} />
-                            {new Date(appointment.appointment_date).toLocaleDateString('pt-BR')} às {appointment.appointment_time}
+                            {formatDateFromISO(appointment.appointment_date)} às {appointment.appointment_time}
                           </p>
                           {appointment.notes && (
                             <p className="text-sm mt-2 italic">Obs: {appointment.notes}</p>

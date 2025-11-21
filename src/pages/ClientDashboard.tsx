@@ -140,6 +140,13 @@ export function ClientDashboard({ onNavigate }: ClientDashboardProps) {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'appointments' | 'evaluations' | 'profile'>('appointments');
 
+  const formatDateFromISO = (dateStr: string) => {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    if (!year || !month || !day) return dateStr;
+    const d = new Date(year, month - 1, day);
+    return d.toLocaleDateString('pt-BR');
+  };
+
   useEffect(() => {
     if (user) {
       loadData();
@@ -304,7 +311,7 @@ export function ClientDashboard({ onNavigate }: ClientDashboardProps) {
                         <div className="space-y-1 text-yellow-100">
                           <p>
                             <Calendar className="inline mr-2" size={16} />
-                            {new Date(appointment.appointment_date).toLocaleDateString('pt-BR')} às {appointment.appointment_time}
+                            {formatDateFromISO(appointment.appointment_date)} às {appointment.appointment_time}
                           </p>
                           <p className="text-sm">Duração: {appointment.services.duration_minutes} minutos</p>
                           {appointment.notes && (
@@ -347,7 +354,7 @@ export function ClientDashboard({ onNavigate }: ClientDashboardProps) {
                         <div className="space-y-1 text-yellow-100">
                           <p>
                             <Calendar className="inline mr-2" size={16} />
-                            {new Date(evaluation.evaluation_date).toLocaleDateString('pt-BR')}
+                            {formatDateFromISO(evaluation.evaluation_date)}
                           </p>
                           <p>
                             <User className="inline mr-2" size={16} />
