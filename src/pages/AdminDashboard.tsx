@@ -417,14 +417,17 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                         </p>
                       )}
                       {evaluation.pdf_url && (
-                        <a
-                          href={evaluation.pdf_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <button
+                          onClick={() => {
+                            const url = evaluation.pdf_url!.startsWith('http')
+                              ? evaluation.pdf_url!
+                              : `${API_URL}${evaluation.pdf_url}`;
+                            window.open(url, '_blank');
+                          }}
                           className="inline-block mt-3 text-sm text-yellow-300 hover:text-yellow-200 underline"
                         >
                           Ver PDF da avaliação
-                        </a>
+                        </button>
                       )}
                     </div>
                   ))}
@@ -468,17 +471,6 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
             Clientes
           </button>
           <button
-            onClick={() => setActiveTab('evaluations-history')}
-            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
-              activeTab === 'evaluations-history'
-                ? 'bg-black text-yellow-400 border-yellow-400'
-                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
-            }`}
-          >
-            <FileText className="inline mr-2" size={20} />
-            Histórico de Avaliações
-          </button>
-          <button
             onClick={() => setActiveTab('upload')}
             className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
               activeTab === 'upload'
@@ -499,6 +491,17 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           >
             <Users className="inline mr-2" size={20} />
             Cadastrar Cliente
+          </button>
+          <button
+            onClick={() => setActiveTab('evaluations-history')}
+            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
+              activeTab === 'evaluations-history'
+                ? 'bg-black text-yellow-400 border-yellow-400'
+                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
+            }`}
+          >
+            <FileText className="inline mr-2" size={20} />
+            Histórico de Avaliações
           </button>
         </div>
 
