@@ -7,11 +7,12 @@ import { ContactPage } from './pages/ContactPage';
 import { AboutPage } from './pages/AboutPage';
 import { BookingPage } from './pages/BookingPage';
 import { LoginPage } from './pages/LoginPage';
+import { BootstrapAdminPage } from './pages/BootstrapAdminPage';
 import { ClientDashboard } from './pages/ClientDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
 
-type Page = 'home' | 'services' | 'contact' | 'booking' | 'login' | 'client-dashboard' | 'admin-dashboard' | 'about' | 'reset-password';
+type Page = 'home' | 'services' | 'contact' | 'booking' | 'login' | 'client-dashboard' | 'admin-dashboard' | 'about' | 'reset-password' | 'bootstrap-admin';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>(() => {
@@ -62,6 +63,8 @@ function App() {
         return <AdminDashboard onNavigate={navigate} />;
       case 'reset-password':
         return <ResetPasswordPage token={resetToken} onNavigate={navigate} />;
+      case 'bootstrap-admin':
+        return <BootstrapAdminPage onNavigate={navigate} />;
       default:
         return <HomePage onNavigate={navigate} />;
     }
