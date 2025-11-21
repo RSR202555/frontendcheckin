@@ -21,10 +21,15 @@ export function Footer() {
                   Praça Pedro da Costa Doréa, Nº76 Proximo a Ruína Inacabada, Alagoinhas Velha, CEP:48007326
                 </span>
               </div>
-              <div className="flex items-center gap-3">
+              <a
+                href="https://wa.me/557599196485?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 hover:text-yellow-300 transition"
+              >
                 <Phone size={20} className="flex-shrink-0" />
-                <span className="text-yellow-400/80">(75) 9919-6485</span>
-              </div>
+                <span className="text-yellow-400/80 underline">(75) 9919-6485</span>
+              </a>
               <div className="flex items-center gap-3">
                 <Mail size={20} className="flex-shrink-0" />
                 <span className="text-yellow-400/80">clinicacheckin@gmail.com</span>
