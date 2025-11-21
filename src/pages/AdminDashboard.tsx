@@ -390,17 +390,6 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
             Clientes
           </button>
           <button
-            onClick={() => setActiveTab('upload')}
-            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
-              activeTab === 'upload'
-                ? 'bg-black text-yellow-400 border-yellow-400'
-                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
-            }`}
-          >
-            <FileText className="inline mr-2" size={20} />
-            Registrar Avaliação
-          </button>
-          <button
             onClick={() => setActiveTab('create-client')}
             className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
               activeTab === 'create-client'
@@ -410,6 +399,17 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           >
             <Users className="inline mr-2" size={20} />
             Cadastrar Cliente
+          </button>
+          <button
+            onClick={() => setActiveTab('upload')}
+            className={`px-6 py-3 font-semibold transition whitespace-nowrap rounded-xl shadow-md border-transparent ${
+              activeTab === 'upload'
+                ? 'bg-black text-yellow-400 border-yellow-400'
+                : 'bg-black text-gray-300 hover:text-yellow-300 border-gray-500/40'
+            }`}
+          >
+            <FileText className="inline mr-2" size={20} />
+            Registrar Avaliação
           </button>
           <button
             onClick={() => setActiveTab('evaluations-history')}
