@@ -66,6 +66,20 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   const [createClientMessage, setCreateClientMessage] = useState<string | null>(null);
   const [createClientError, setCreateClientError] = useState<string | null>(null);
 
+  const handleDeleteEvaluation = async (evaluationId: string) => {
+    if (!selectedClient) return;
+
+    const confirmed = window.confirm('Tem certeza que deseja excluir esta avaliação? Esta ação não pode ser desfeita.');
+    if (!confirmed) return;
+
+    try {
+      await api.delete<{ success: boolean }>(`/admin/evaluations/${evaluationId}`);
+      await loadEvaluationsHistory(selectedClient);
+    } catch (error) {
+      console.error('Erro ao excluir avaliação', error);
+    }
+  };
+
   const loadEvaluationsHistory = async (clientId: string) => {
     if (!clientId) {
       setEvaluationsHistory([]);
@@ -479,6 +493,12 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                             Profissional: {evaluation.professional_full_name}
                           </p>
                         </div>
+                        <button
+                          onClick={() => handleDeleteEvaluation(evaluation.id)}
+                          className="px-3 py-1 text-xs font-semibold rounded-md bg-red-600 text-white hover:bg-red-700 transition"
+                        >
+                          Excluir
+                        </button>
                       </div>
                       {evaluation.notes && (
                         <p className="text-sm mt-2 text-yellow-100">
